@@ -46,10 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BotonAyuda.cs" />
-     <Compile Include="Assets\Scripts\BotonIniciar.cs" />
-     <Compile Include="Assets\Scripts\BotonSalir.cs" />
-     <Compile Include="Assets\Scripts\ManejadorJuego.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\HelpButton.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\QuitButton.cs" />
+     <Compile Include="Assets\Scripts\StartButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

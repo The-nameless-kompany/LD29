@@ -1,10 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BotonIniciar.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\BotonSalir.cs" Line="4" Column="42" />
-      <File FileName="Assets\Scripts\BotonIniciar.cs" Line="7" Column="2" />
-      <File FileName="Assets\Scripts\BotonAyuda.cs" Line="5" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\Dropbox\Trabajos\Trabajos\Juegos\horrografia\fuentes\Assets\Scripts\ManejadorJuego1.cs" Line="43" Column="87" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

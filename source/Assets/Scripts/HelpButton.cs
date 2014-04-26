@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BotonAyuda : MonoBehaviour {
+public class HelpButton : MonoBehaviour {
 
 }

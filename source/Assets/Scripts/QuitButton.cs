@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BotonSalir : MonoBehaviour {
+public class QuitButton : MonoBehaviour {
 
 	void OnMouseDown(){
 		Application.Quit();
