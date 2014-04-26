@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BotonIniciar.cs">
+    <Files>
+      <File FileName="Assets\Scripts\BotonSalir.cs" Line="4" Column="42" />
+      <File FileName="Assets\Scripts\BotonIniciar.cs" Line="7" Column="2" />
+      <File FileName="Assets\Scripts\BotonAyuda.cs" Line="5" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
