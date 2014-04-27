@@ -5,7 +5,6 @@ public class Pause : MonoBehaviour {
 
 	private Player player;
 	public string pauseKey = "p";
-	private bool active = false;
 
 
 	public static Pause get() {
@@ -22,7 +21,6 @@ public class Pause : MonoBehaviour {
 		if(Input.GetKeyDown(pauseKey))
 		{
 			player.pause = false;
-			active = false;
 			gameObject.SetActive(false);
 		}
 	}

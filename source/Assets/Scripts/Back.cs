@@ -13,7 +13,6 @@ public class Back : MonoBehaviour {
 	// Update is called once per frame
 	void OnMouseDown () {
 		(FindObjectOfType(typeof(Player)) as Player).pause = false;
-		active = false;
 		pauseMenu.SetActive(false);
 	}
 }

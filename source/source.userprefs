@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Back.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Earthquake.cs">
     <Files>
-      <File FileName="Assets\Scripts\Pause.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Back.cs" Line="10" Column="50" />
+      <File FileName="Assets\Scripts\Structure.cs" Line="32" Column="12" />
+      <File FileName="Assets\Scripts\Pause.cs" Line="7" Column="31" />
+      <File FileName="Assets\Scripts\Player.cs" Line="50" Column="5" />
+      <File FileName="Assets\Scripts\Earthquake.cs" Line="58" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

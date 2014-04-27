@@ -45,6 +45,10 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if(!pause)
 		{
+			if(Input.GetKey("m"))
+			{
+				Earthquake.get().quake();
+			}
 			if(Input.GetKey(KeyCode.UpArrow))
 			{
 				if(gameManager.move(0))
