@@ -160,6 +160,12 @@ public class GameManager : MonoBehaviour {
 		return result;
 	}
 
+	public bool repair()
+	{
+		return ((Structure)board[xPlayer,yPlayer].GetComponent(typeof(Structure))).repair();
+	}
+
+
 	public bool canMove(int x, int y){
 		return (x<boardState.GetLength(0) && 0<=x && y<boardState.GetLength(1) && 0<=y && boardState[x,y]<30 && 20<=boardState[x,y]);
 	}

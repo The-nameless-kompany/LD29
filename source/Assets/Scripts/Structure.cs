@@ -36,10 +36,16 @@ public class Structure : MonoBehaviour {
 		return result;
 	}
 
-	public void repair()
+	public bool repair()
 	{
-		this.renderer.material.mainTexture = goodState;
-		this.life = 100;
+		bool result=false;
+		if(this.life<100)
+		{
+			result = true;
+			this.renderer.material.mainTexture = goodState;
+			this.life = 100;
+		}
+		return result;
 	}
 
 	public void setCoordinates(int x,int y){

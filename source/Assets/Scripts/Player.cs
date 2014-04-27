@@ -17,7 +17,8 @@ public class Player : MonoBehaviour {
 	private GameObject pauseMenu;
 	public AudioClip digSound = null;
 	public AudioClip walkSound = null;
-	private int digCost = 120;
+	public int digCost = 120;
+	public int repairCost = 60;
 	private GameObject silverText;
 
 	/*
@@ -43,16 +44,12 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!pause)
-		{
-			if(Input.GetKey("m"))
-			{
+		if(!pause){
+			if(Input.GetKey("m")){
 				Earthquake.get().quake();
 			}
-			if(Input.GetKey(KeyCode.UpArrow))
-			{
-				if(gameManager.move(0))
-				{
+			if(Input.GetKey(KeyCode.UpArrow)){
+				if(gameManager.move(0)){
 					pause = true;
 					moving = true;
 					yDir = 1;
@@ -60,10 +57,8 @@ public class Player : MonoBehaviour {
 				}
 				direction = 0;
 			}
-			if(Input.GetKey(KeyCode.RightArrow))
-			{
-				if(gameManager.move(1))
-				{
+			if(Input.GetKey(KeyCode.RightArrow)){
+				if(gameManager.move(1)){
 					pause = true;
 					moving = true;
 					xDir = 1;
@@ -71,10 +66,8 @@ public class Player : MonoBehaviour {
 				}
 				direction = 1;
 			}
-			if(Input.GetKey(KeyCode.DownArrow))
-			{
-				if(gameManager.move(2))
-				{
+			if(Input.GetKey(KeyCode.DownArrow)){
+				if(gameManager.move(2)){
 					pause = true;
 					moving = true;
 					yDir = -1;
@@ -82,10 +75,8 @@ public class Player : MonoBehaviour {
 				}
 				direction = 2;
 			}
-			if(Input.GetKey(KeyCode.LeftArrow))
-			{
-				if(gameManager.move(3))
-				{
+			if(Input.GetKey(KeyCode.LeftArrow)){
+				if(gameManager.move(3)){
 					pause = true;
 					moving = true;
 					xDir = -1;
@@ -93,66 +84,59 @@ public class Player : MonoBehaviour {
 				}
 				direction = 3;
 			}
-			if(Input.GetKeyDown(pauseKey))
-			{
+			if(Input.GetKeyDown(pauseKey)){
 				pause = true;
 				pauseMenu.SetActive(true);
 				(FindObjectOfType(typeof(Pause)) as Pause).setPlayer(this);
 			}
-			if(Input.GetKeyDown(KeyCode.Space))
-			{
-				switch (action)
-				{
+			if(Input.GetKeyDown(KeyCode.Space)){
+				switch (action){
 				case 1:
-					if(0<=(resources-digCost))
-					{
-						if(gameManager.dig(direction))
-						{
+					if(0<=(resources-digCost)){
+						if(gameManager.dig(direction)){
 							resources-=digCost;
 							audio.PlayOneShot(digSound);
 							silverText.guiText.text = "Silver: "+resources;
 						}
 					}
-					else
-					{
-
-					}
 					break;
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.LeftControl)){
+				if(gameManager.repair())
+				{
+					if(0<=(resources-repairCost)){
+						resources -= repairCost;
+						audio.PlayOneShot(digSound);
+						silverText.guiText.text = "Silver: "+resources;
+					}
 				}
 			}
 		}
 
-		if(moving)
-		{
+		if(moving){
 			position = transform.localPosition;
-			if(yDir!=0)
-			{
-				if(yDir==1)
-				{
+			if(yDir!=0){
+				if(yDir==1){
 					position.y += 1.0f/speed;
 					
 				}
-				else
-				{
+				else{
 					position.y -= 1.0f/speed;
 				}
 			}
-			if(xDir!=0)
-			{
-				if(xDir==1)
-				{
+			if(xDir!=0){
+				if(xDir==1){
 					position.x += 1.0f/speed;
 					
 				}
-				else
-				{
+				else{
 					position.x -= 1.0f/speed;
 				}
 			}
 			--count;
 			transform.localPosition = position;
-			if(count ==0 )
-			{
+			if(count ==0 ){
 				xDir = 0;
 				yDir = 0;
 				position.x = gameManager.getXPlayer();
@@ -162,10 +146,5 @@ public class Player : MonoBehaviour {
 			}
 
 		}
-
-
 	}
-
-
-
 }
