@@ -75,45 +75,104 @@ public class GameManager : MonoBehaviour {
 	 * 2: down
 	 * 3: left
 	 */
-	public bool move(int place)
-	{
-		bool resultado = false;
+	public bool move(int place){
+		bool result = false;
 		switch(place)
 		{
 		case 0:
 			if(canMove(xPlayer,yPlayer-1))
 			{
 				--yPlayer;
-				resultado = true;
+				result = true;
 			}
 			break;
 		case 1:
 			if(canMove(xPlayer+1,yPlayer))
 			{
 				++xPlayer;
-				resultado = true;
+				result = true;
 			}
 			break;
 		case 2:
 			if(canMove(xPlayer,yPlayer+1))
 			{
 				++yPlayer;
-				resultado = true;
+				result = true;
 			}
 			break;
 		case 3:
 			if(canMove(xPlayer-1,yPlayer))
 			{
 				--xPlayer;
-				resultado = true;
+				result = true;
 			}
 			break;
 		}
-		return resultado;
+		return result;
 	}
 
-	public bool canMove(int x, int y)
+	public bool dig(int direction)
 	{
+		bool result = false;
+		switch(direction)
+		{
+		case 0:
+			if(reachable(xPlayer,yPlayer-1))
+			{
+				boardState[xPlayer,yPlayer-1] = 20;
+				Destroy(board[xPlayer,yPlayer-1]);
+				board[xPlayer,yPlayer-1] = (GameObject)Instantiate((GameObject)Resources.Load("Board/build"));
+				board[xPlayer,yPlayer-1].transform.localPosition = new Vector3(xPlayer-board.GetLength(0)/2,board.GetLength(1)/2-(yPlayer-1),0.0f);
+				result = true;
+			}
+			break;
+		case 1:
+			if(reachable(xPlayer+1,yPlayer))
+			{
+				boardState[xPlayer+1,yPlayer] = 20;
+				Destroy(board[xPlayer+1,yPlayer]);
+				board[xPlayer+1,yPlayer] = (GameObject)Instantiate((GameObject)Resources.Load("Board/build"));
+				board[xPlayer+1,yPlayer].transform.localPosition = new Vector3(xPlayer+1-board.GetLength(0)/2,board.GetLength(1)/2-yPlayer,0.0f);
+				result = true;
+			}
+			break;
+		case 2:
+			if(reachable(xPlayer,yPlayer+1))
+			{
+				boardState[xPlayer,yPlayer+1] = 20;
+				Destroy(board[xPlayer,yPlayer+1]);
+				board[xPlayer,yPlayer+1] = (GameObject)Instantiate((GameObject)Resources.Load("Board/build"));
+				board[xPlayer,yPlayer+1].transform.localPosition = new Vector3(xPlayer-board.GetLength(0)/2,board.GetLength(1)/2-(yPlayer+1),0.0f);
+				result = true;
+			}
+			break;
+		case 3:
+			if(reachable(xPlayer-1,yPlayer))
+			{
+				boardState[xPlayer-1,yPlayer] = 20;
+				Destroy(board[xPlayer-1,yPlayer]);
+				board[xPlayer-1,yPlayer] = (GameObject)Instantiate((GameObject)Resources.Load("Board/build"));
+				board[xPlayer-1,yPlayer].transform.localPosition = new Vector3(xPlayer-1-board.GetLength(0)/2,board.GetLength(1)/2-yPlayer,0.0f);
+				result = true;
+			}
+			break;
+		}
+		return result;
+	}
+
+	public bool canMove(int x, int y){
 		return (x<boardState.GetLength(0) && 0<=x && y<boardState.GetLength(1) && 0<=y && boardState[x,y]<30 && 20<=boardState[x,y]);
+	}
+
+	public bool reachable(int x, int y){
+		return (x<boardState.GetLength(0) && 0<=x && y<boardState.GetLength(1) && 0<=y && boardState[x,y]<20 && 10<=boardState[x,y]);
+	}
+
+	public int getXPlayer(){
+		return xPlayer;
+	}
+
+	public int getYPlayer(){
+		return yPlayer;
 	}
 }
