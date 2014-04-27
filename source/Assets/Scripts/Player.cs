@@ -13,7 +13,8 @@ public class Player : MonoBehaviour {
 	private int count = 0;
 	private GameManager gameManager;
 	private Vector3 position;
-
+	public string pauseKey = "p";
+	private GameObject pauseMenu;
 
 	/*
 	 * Simbology
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour {
 	 */ 
 	private int action = 1;
 
-	public static Player M() {
+	public static Player get() {
 		return FindObjectOfType(typeof(Player)) as Player;
 	}
 
@@ -30,6 +31,8 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManager = GameManager.obtener();
+		pauseMenu = GameObject.Find("Game/Pause menu");
+		pauseMenu.SetActive(false);
 
 	}
 	
@@ -80,6 +83,12 @@ public class Player : MonoBehaviour {
 					count = speed;
 				}
 				direction = 3;
+			}
+			if(Input.GetKeyDown(pauseKey))
+			{
+				pause = true;
+				pauseMenu.SetActive(true);
+				(FindObjectOfType(typeof(Pause)) as Pause).setPlayer(this);
 			}
 		}
 

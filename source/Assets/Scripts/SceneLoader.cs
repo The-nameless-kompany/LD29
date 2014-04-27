@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StartButton : MonoBehaviour {
+public class SceneLoader : MonoBehaviour {
 
 	public string level = "Game";
 
