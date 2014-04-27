@@ -45,8 +45,8 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!pause){
-			if(Input.GetKey("m")){
-				Earthquake.get().quake();
+			if(Input.GetKeyDown("m")){
+				gameManager.quake();
 			}
 			if(Input.GetKey(KeyCode.UpArrow)){
 				if(gameManager.move(0)){

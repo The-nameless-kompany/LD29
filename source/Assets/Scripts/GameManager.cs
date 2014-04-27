@@ -160,6 +160,21 @@ public class GameManager : MonoBehaviour {
 		return result;
 	}
 
+	public void quake()
+	{
+		int damage = (Earthquake.get().quake()+1)/4;
+		for(int i=0;i<board.GetLength(0);++i)
+		{
+			for(int j=0;j<board.GetLength(1);++j)
+			{
+				if(boardState[i,j]<30 && 20<=boardState[i,j])
+				{
+					((Structure)board[i,j].GetComponent(typeof(Structure))).damage(damage);
+				}
+			}
+		}
+	}
+
 	public bool repair()
 	{
 		return ((Structure)board[xPlayer,yPlayer].GetComponent(typeof(Structure))).repair();

@@ -39,7 +39,7 @@ public class Structure : MonoBehaviour {
 	public bool repair()
 	{
 		bool result=false;
-		if(this.life<100)
+		if(this.life<100 && goodState != null) 
 		{
 			result = true;
 			this.renderer.material.mainTexture = goodState;

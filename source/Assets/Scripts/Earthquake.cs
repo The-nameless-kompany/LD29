@@ -23,13 +23,14 @@ public class Earthquake : MonoBehaviour {
 		}
 	}
 
-	public void quake()
+	public int quake()
 	{
 		this.getDirections();
 		magnitude=Random.Range(3,shakes);
 		isQuake = true;
 		x=0;
 		y=0;
+		return magnitude;
 	}
 
 	public void Update(){
@@ -102,10 +103,8 @@ public class Earthquake : MonoBehaviour {
 			}
 		}
 		transform.position = poV;
-		//StartCoroutine(wait(100.0F));
 	}	
 	
-	//retorna Earthquake
 	public static Earthquake get() {
 		return FindObjectOfType(typeof(Earthquake)) as Earthquake;
 	}
