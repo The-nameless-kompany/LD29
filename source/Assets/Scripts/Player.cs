@@ -14,12 +14,19 @@ public class Player : MonoBehaviour {
 	private GameManager gameManager;
 	private Vector3 position;
 
+
 	/*
 	 * Simbology
 	 * 
 	 * 1: dig
 	 */ 
 	private int action = 1;
+
+	public static Player M() {
+		return FindObjectOfType(typeof(Player)) as Player;
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		gameManager = GameManager.obtener();
