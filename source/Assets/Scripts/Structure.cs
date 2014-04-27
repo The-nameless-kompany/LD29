@@ -7,6 +7,7 @@ public class Structure : MonoBehaviour {
 	public int life = 100;
 	private int x =-1;
 	private int y =-1;
+	public Texture goodState = null;
 	public Texture badState = null;
 
 	// Use this for initialization
@@ -33,6 +34,12 @@ public class Structure : MonoBehaviour {
 			this.renderer.material.mainTexture = badState;
 		}
 		return result;
+	}
+
+	public void repair()
+	{
+		this.renderer.material.mainTexture = goodState;
+		this.life = 100;
 	}
 
 	public void setCoordinates(int x,int y){

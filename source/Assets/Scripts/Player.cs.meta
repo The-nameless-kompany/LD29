@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 9fabff5ed27a73f4eb1b6a850ad237e6
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - digSound: {fileID: 8300000, guid: 3ff9fcf8763db443d8c48710cdf9ab60, type: 3}
+  - walkSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

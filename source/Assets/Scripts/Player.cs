@@ -15,6 +15,10 @@ public class Player : MonoBehaviour {
 	private Vector3 position;
 	public string pauseKey = "p";
 	private GameObject pauseMenu;
+	public AudioClip digSound = null;
+	public AudioClip walkSound = null;
+	private int digCost = 120;
+	private GameObject silverText;
 
 	/*
 	 * Simbology
@@ -33,7 +37,8 @@ public class Player : MonoBehaviour {
 		gameManager = GameManager.obtener();
 		pauseMenu = GameObject.Find("Game/Pause menu");
 		pauseMenu.SetActive(false);
-
+		silverText = GameObject.Find("Game/SilverText");
+		silverText.guiText.text = "Silver: "+resources;
 	}
 	
 	// Update is called once per frame
@@ -90,6 +95,27 @@ public class Player : MonoBehaviour {
 				pauseMenu.SetActive(true);
 				(FindObjectOfType(typeof(Pause)) as Pause).setPlayer(this);
 			}
+			if(Input.GetKeyDown(KeyCode.Space))
+			{
+				switch (action)
+				{
+				case 1:
+					if(0<=(resources-digCost))
+					{
+						if(gameManager.dig(direction))
+						{
+							resources-=digCost;
+							audio.PlayOneShot(digSound);
+							silverText.guiText.text = "Silver: "+resources;
+						}
+					}
+					else
+					{
+
+					}
+					break;
+				}
+			}
 		}
 
 		if(moving)
@@ -133,15 +159,7 @@ public class Player : MonoBehaviour {
 
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			switch (action)
-			{
-			case 1:
-				gameManager.dig(direction);
-				break;
-			}
-		}
+
 	}
 
 
