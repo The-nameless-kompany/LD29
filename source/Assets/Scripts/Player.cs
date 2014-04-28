@@ -26,7 +26,6 @@ public class Player : MonoBehaviour {
 	private int count = 0;
 	private GameManager gameManager;
 	private Vector3 position;
-	private GameObject pauseMenu;
 	private GameObject silverText;
 	private int actions = 0;
 	private bool moving = false;
@@ -47,8 +46,6 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManager = GameManager.obtener();
-		pauseMenu = GameObject.Find("Game/Pause menu");
-		pauseMenu.SetActive(false);
 		silverText = GameObject.Find("Game/SilverText");
 		silverText.guiText.text = "Silver: "+resources;
 	}
@@ -96,7 +93,7 @@ public class Player : MonoBehaviour {
 			}
 			if(Input.GetKeyDown(pauseKey)){
 				pause = true;
-				pauseMenu.SetActive(true);
+				Instantiate((GameObject)Resources.Load("Pause menu"));
 				(FindObjectOfType(typeof(Pause)) as Pause).setPlayer(this);
 			}
 			if(Input.GetKeyDown(KeyCode.Space)){

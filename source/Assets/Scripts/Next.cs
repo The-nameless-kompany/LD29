@@ -3,8 +3,14 @@ using System.Collections;
 
 public class Next : MonoBehaviour {
 
-	// Use this for initialization
+	GameObject winMenu;
+	void Start()
+	{
+		winMenu = GameObject.Find("Win menu(Clone)");
+	}
+
 	void OnMouseDown(){
 		GameManager.obtener().nextMap();
+		Destroy(winMenu);
 	}
 }

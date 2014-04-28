@@ -5,10 +5,25 @@ public class GameManager : MonoBehaviour {
 	private GameObject[,] board;
 	private GameObject player;
 	private int[,] boardState;
-	private int[] resources;
+	private int currentMap=0;
+	private int[] resources = new int[2]{960,1290};
+	private int[,,] maps = new int[2,6,6]{
+		{   {10,10,10,10,10,10},
+			{10,20,10,10,10,10},
+			{10,11,10,11,10,10},
+			{10,11,10,11,10,10},
+			{10,10,10,11,11,11},
+			{10,11,10,10,10,30}
+		},
+		{
+		{20,10,20,10,20,10},
+		{10,20,10,20,11,10},
+		{20,10,20,11,11,10},
+		{10,20,11,11,10,10},
+		{20,11,11,10,10,11},
+		{10,10,10,11,11,30}}
 
-	private int currentMap;
-	private int[,,] maps;
+	};
 
 	//private float resolution = 800 / 800;
 	private int xPlayer =0;
@@ -283,7 +298,7 @@ public class GameManager : MonoBehaviour {
 		boardState[x,y] = 10;
 		board[x,y]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
 		board[x,y].transform.localPosition = new Vector3(x-board.GetLength(0)/2,board.GetLength(1)/2-y,0.0f);
-		if(canMove(x,y+1))
+		if(canMove(x,y+1)&&boardState[x,y+1] != 30)
 		{
 			if(((Structure)board[x,y+1].GetComponent(typeof(Structure))).damage(2)){
 				boardState[x,y+1] = 10;
@@ -295,7 +310,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		if(canMove(x,y-1))
+		if(canMove(x,y-1)&&boardState[x,y-1] != 30)
 		{
 			if(((Structure)board[x,y-1].GetComponent(typeof(Structure))).damage(2)){
 				boardState[x,y-1] = 10;
@@ -307,7 +322,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		if(canMove(x+1,y))
+		if(canMove(x+1,y) && boardState[x+1,y] != 30)
 		{
 			if(((Structure)board[x+1,y].GetComponent(typeof(Structure))).damage(2)){
 				boardState[x+1,y] = 10;
@@ -319,7 +334,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		if(canMove(x-1,y))
+		if(canMove(x-1,y)&&boardState[x-1,y] != 30)
 		{
 			if(((Structure)board[x-1,y].GetComponent(typeof(Structure))).damage(2)){
 				boardState[x-1,y] = 10;
@@ -372,10 +387,19 @@ public class GameManager : MonoBehaviour {
 		return (boardState[xPlayer,yPlayer]==30);
 	}
 
+	public void destroyCurrent(){
+		for(int i=0;i<board.GetLength(0);++i){
+			for(int j=0;j<board.GetLength(1);++j){
+				Destroy(board[i,j]);
+			}
+		}
+	}
 
 	public void nextMap(){
+		destroyCurrent();
 		currentMap = (currentMap+1)%maps.GetLength(0);
 		boardState = new int[maps.GetLength(1),maps.GetLength(2)];
+
 		for(int i=0;i<maps.GetLength(1);++i)
 		{
 			for(int j=0;j<maps.GetLength(2);++j)

@@ -7,12 +7,12 @@ public class Back : MonoBehaviour {
 
 	void Start()
 	{
-		pauseMenu = GameObject.Find("Game/Pause menu");
+		pauseMenu = GameObject.Find("Pause menu(Clone)");
 	}
 	
 	// Update is called once per frame
 	void OnMouseDown () {
 		(FindObjectOfType(typeof(Player)) as Player).pause = false;
-		pauseMenu.SetActive(false);
+		Destroy(pauseMenu);
 	}
 }
