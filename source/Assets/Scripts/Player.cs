@@ -3,23 +3,32 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	public AudioClip digSound = null;
+	public AudioClip walkSound = null;
+	public int digCost = 120;
+	public int repairCost = 60;
+	public int dinamiteCost = 130;
 	public bool pause = false;
-	private bool moving = false;
 	public int resources = 1000;
 	public int speed = 15;
-	private int direction = 0;
+	public int actionsByWalk = 1;
+	public int actionsByDigRightOrLeft = 2;
+	public int actionsByDigUpOrDown = 3;
+	public int actionsByDinamite = 2;
+
+	private int actionsPerQuake = 30;
+	private string pauseKey = "p";
+	private int direction = 1;
 	private int yDir = 0;
 	private int xDir = 0;
 	private int count = 0;
 	private GameManager gameManager;
 	private Vector3 position;
-	public string pauseKey = "p";
 	private GameObject pauseMenu;
-	public AudioClip digSound = null;
-	public AudioClip walkSound = null;
-	public int digCost = 120;
-	public int repairCost = 60;
 	private GameObject silverText;
+	private int actions = 0;
+	private bool moving = false;
+
 
 	/*
 	 * Simbology
@@ -45,9 +54,6 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!pause){
-			if(Input.GetKeyDown("m")){
-				gameManager.quake();
-			}
 			if(Input.GetKey(KeyCode.UpArrow)){
 				if(gameManager.move(0)){
 					pause = true;
@@ -97,6 +103,19 @@ public class Player : MonoBehaviour {
 							resources-=digCost;
 							audio.PlayOneShot(digSound);
 							silverText.guiText.text = "Silver: "+resources;
+							if(direction == 0||direction ==2){
+								actions+=actionsByDigUpOrDown;
+							}
+							else{
+								actions+=actionsByDigRightOrLeft;
+							}
+						}
+					}
+					if(0<=(resources-dinamiteCost)){
+						if(gameManager.dinamite(direction)){
+							resources-=digCost;
+							silverText.guiText.text = "Silver: "+resources;
+							actions+=actionsByDinamite;
 						}
 					}
 					break;
@@ -136,15 +155,19 @@ public class Player : MonoBehaviour {
 			}
 			--count;
 			transform.localPosition = position;
-			if(count ==0 ){
+			if(count ==0){
 				xDir = 0;
 				yDir = 0;
-				position.x = gameManager.getXPlayer();
-				position.y = gameManager.getYPlayer();
 				pause = false;
 				moving = false;
+				actions += actionsByWalk;
 			}
 
+		}
+		if(actionsPerQuake<actions){
+			pause = true;
+			gameManager.quake();
+			actions = 0;
 		}
 	}
 }

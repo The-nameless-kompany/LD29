@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Earthquake : MonoBehaviour {
 	
-	private GameObject view;
+	private GameManager gameManager;
 	private float force = 3.0f;
 	private int magnitude = 1;
 	private int shakes = 15;
@@ -13,7 +13,6 @@ public class Earthquake : MonoBehaviour {
 	private int x=0,y=0,count =0;
 
 	void Start(){
-		view =GameObject.Find("Environment/Main Camera");
 		directions = new int[shakes];
 	}
 	
@@ -23,42 +22,38 @@ public class Earthquake : MonoBehaviour {
 		}
 	}
 
-	public int quake()
+	public int quake(GameManager gameManager)
 	{
 		this.getDirections();
 		magnitude=Random.Range(3,shakes);
 		isQuake = true;
 		x=0;
 		y=0;
+		this.gameManager = gameManager;
 		return magnitude;
 	}
 
 	public void Update(){
-		if(isQuake)
-		{
-			if(count%5 == 0)
-			{
-				if(count%2==0)
-				{
+		if(isQuake){
+			if(count%5 == 0){
+				if(count%2==0){
 					++x;
 					this.move(directions[x],true);
 				}
-				else
-				{
+				else{
 					++y;
 					this.move(directions[y],false);
-				
 				}
 			}
 			++count;
-			if(y==magnitude)
-			{
+			if(y==magnitude){
 				Vector3 location = transform.position;
 				location.x = 0.0f;
 				location.y = 0.0f;
 				transform.position = location;
 				isQuake = false;
 				count = 0;
+				gameManager.continu();
 			}
 		}
 	}
