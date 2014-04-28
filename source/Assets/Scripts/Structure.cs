@@ -23,11 +23,11 @@ public class Structure : MonoBehaviour {
 	 * 4: critical damage
 	 */ 
 	public bool damage(int damage){
-		bool result = true;
+		bool result = false;
 		life -= Random.Range(8*damage,15*damage);
 		if(life < 1)
 		{
-			result = false;
+			result = true;
 		}
 		if(life < 50 && badState != null)
 		{

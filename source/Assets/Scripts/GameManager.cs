@@ -5,6 +5,11 @@ public class GameManager : MonoBehaviour {
 	private GameObject[,] board;
 	private GameObject player;
 	private int[,] boardState;
+	private int[] resources;
+
+	private int currentMap;
+	private int[,,] maps;
+
 	//private float resolution = 800 / 800;
 	private int xPlayer =0;
 	private int yPlayer =0;
@@ -26,13 +31,16 @@ public class GameManager : MonoBehaviour {
 	 * 30: gold
 	 * 
 	 * 40: dinamite
+	 * 
+	 * 50: invencible
 	 */
 	// Use this for initialization
 	void Start () {
 		//Camera.main.aspect = resolution;
 		xPlayer = 1;
 		yPlayer = 1;
-		boardState = new int[6,6]{{10,10,10,10,10,10},{10,20,20,10,10,10},{10,10,10,11,10,10},{10,10,10,11,10,10},{10,10,10,10,30,10},{10,10,10,10,10,10}};
+		boardState = new int[6,6]{{10,10,10,10,10,10},{10,20,20,10,50,10},{10,10,10,11,10,10},{10,10,10,11,10,10},{10,10,10,10,30,10},{10,10,10,10,10,10}};
+
 		fillBoard();
 		player = (GameObject)Instantiate((GameObject)Resources.Load("player"));
 		player.transform.localPosition = new Vector3(xPlayer-board.GetLength(0)/2,board.GetLength(1)/2-yPlayer,0.0f);
@@ -68,6 +76,9 @@ public class GameManager : MonoBehaviour {
 					
 				case 40:
 					board[i,j] = (GameObject)Instantiate((GameObject)Resources.Load("Board/dinamite"));
+					break;
+				case 50:
+					board[i,j] = (GameObject)Instantiate((GameObject)Resources.Load("Board/invencible"));
 					break;
 				}
 			board[i,j].transform.localPosition = new Vector3(i-board.GetLength(0)/2,board.GetLength(1)/2-j,0.0f);
@@ -109,6 +120,11 @@ public class GameManager : MonoBehaviour {
 				result = true;
 			}
 			break;
+		}
+		if(win())
+		{
+			((Player)player.GetComponent(typeof(Player))).pause = true;
+			Instantiate((GameObject)Resources.Load("Win menu"));
 		}
 		return result;
 	}
@@ -247,7 +263,15 @@ public class GameManager : MonoBehaviour {
 		for(int i=0;i<board.GetLength(0);++i){
 			for(int j=0;j<board.GetLength(1);++j){
 				if(boardState[i,j]<30 && 20<=boardState[i,j]){
-					((Structure)board[i,j].GetComponent(typeof(Structure))).damage(damage);
+					if(((Structure)board[i,j].GetComponent(typeof(Structure))).damage(damage)){
+						boardState[i,j] = 10;
+						board[i,j]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
+						board[i,j].transform.localPosition = new Vector3(i-board.GetLength(0)/2,board.GetLength(1)/2-j,0.0f);
+						if(i== xPlayer && j ==yPlayer)
+						{
+							gameOver();
+						}
+					}
 				}
 			}
 		}
@@ -256,23 +280,56 @@ public class GameManager : MonoBehaviour {
 	public void explosion(int x, int y)
 	{
 		Destroy(board[x,y]);
+		boardState[x,y] = 10;
 		board[x,y]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
 		board[x,y].transform.localPosition = new Vector3(x-board.GetLength(0)/2,board.GetLength(1)/2-y,0.0f);
 		if(canMove(x,y+1))
 		{
-			((Structure)board[x,y+1].GetComponent(typeof(Structure))).damage(2);
+			if(((Structure)board[x,y+1].GetComponent(typeof(Structure))).damage(2)){
+				boardState[x,y+1] = 10;
+				board[x,y+1]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
+				board[x,y+1].transform.localPosition = new Vector3(x-board.GetLength(0)/2,board.GetLength(1)/2-(y-1),0.0f);
+				if(x== xPlayer && y+1 ==yPlayer)
+				{
+					gameOver();
+				}
+			}
 		}
 		if(canMove(x,y-1))
 		{
-			((Structure)board[x,y-1].GetComponent(typeof(Structure))).damage(2);
+			if(((Structure)board[x,y-1].GetComponent(typeof(Structure))).damage(2)){
+				boardState[x,y-1] = 10;
+				board[x,y-1]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
+				board[x,y-1].transform.localPosition = new Vector3(x-board.GetLength(0)/2,board.GetLength(1)/2-(y+1),0.0f);
+				if(x== xPlayer && y-1 ==yPlayer)
+				{
+					gameOver();
+				}
+			}
 		}
 		if(canMove(x+1,y))
 		{
-			((Structure)board[x+1,y].GetComponent(typeof(Structure))).damage(2);
+			if(((Structure)board[x+1,y].GetComponent(typeof(Structure))).damage(2)){
+				boardState[x+1,y] = 10;
+				board[x+1,y]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
+				board[x+1,y].transform.localPosition = new Vector3(x+1-board.GetLength(0)/2,board.GetLength(1)/2-y,0.0f);
+				if(x+1== xPlayer && y ==yPlayer)
+				{
+					gameOver();
+				}
+			}
 		}
 		if(canMove(x-1,y))
 		{
-			((Structure)board[x-1,y].GetComponent(typeof(Structure))).damage(2);
+			if(((Structure)board[x-1,y].GetComponent(typeof(Structure))).damage(2)){
+				boardState[x-1,y] = 10;
+				board[x-1,y]= (GameObject)Instantiate((GameObject)Resources.Load("Board/ground"));
+				board[x-1,y].transform.localPosition = new Vector3(x-1-board.GetLength(0)/2,board.GetLength(1)/2-y,0.0f);
+				if(x-1== xPlayer && y ==yPlayer)
+				{
+					gameOver();
+				}
+			}
 		}
 	}
 
@@ -281,7 +338,7 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public bool canMove(int x, int y){
-		return (x<boardState.GetLength(0) && 0<=x && y<boardState.GetLength(1) && 0<=y && boardState[x,y]<30 && 20<=boardState[x,y]);
+		return (x<boardState.GetLength(0) && 0<=x && y<boardState.GetLength(1) && 0<=y && ((boardState[x,y]<30 && 20<=boardState[x,y])||boardState[x,y] ==30 ));
 	}
 
 	public bool reachable(int x, int y){
@@ -300,8 +357,38 @@ public class GameManager : MonoBehaviour {
 		return yPlayer;
 	}
 
-	public void continu()
-	{
+	public void continu(){
+		if(player!= null)
 		((Player)player.GetComponent(typeof(Player))).pause = false;
 	}
+
+	public void gameOver(){
+		Destroy(player);
+		Instantiate((GameObject)Resources.Load("GameOver"));
+
+	}
+
+	public bool win(){
+		return (boardState[xPlayer,yPlayer]==30);
+	}
+
+
+	public void nextMap(){
+		currentMap = (currentMap+1)%maps.GetLength(0);
+		boardState = new int[maps.GetLength(1),maps.GetLength(2)];
+		for(int i=0;i<maps.GetLength(1);++i)
+		{
+			for(int j=0;j<maps.GetLength(2);++j)
+			{
+				boardState[i,j] = maps[currentMap,i,j];
+			}
+		}
+		fillBoard();
+		Destroy(player);
+		player = (GameObject)Instantiate((GameObject)Resources.Load("player"));
+		xPlayer =0;
+		yPlayer =0;
+		player.transform.localPosition = new Vector3(xPlayer-board.GetLength(0)/2,board.GetLength(1)/2-yPlayer,0.0f);
+	}
+
 }

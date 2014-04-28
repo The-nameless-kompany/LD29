@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	public Texture right = null;
+	public Texture left = null;
 	public AudioClip digSound = null;
 	public AudioClip walkSound = null;
 	public int digCost = 120;
@@ -70,6 +72,7 @@ public class Player : MonoBehaviour {
 					xDir = 1;
 					count = speed;
 				}
+				this.renderer.material.mainTexture = right;
 				direction = 1;
 			}
 			if(Input.GetKey(KeyCode.DownArrow)){
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour {
 					xDir = -1;
 					count = speed;
 				}
+				this.renderer.material.mainTexture = left;
 				direction = 3;
 			}
 			if(Input.GetKeyDown(pauseKey)){
@@ -169,5 +173,9 @@ public class Player : MonoBehaviour {
 			gameManager.quake();
 			actions = 0;
 		}
+	}
+
+	public void setResources(int resources){
+		this.resources = resources;
 	}
 }
