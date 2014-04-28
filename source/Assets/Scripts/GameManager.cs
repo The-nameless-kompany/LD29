@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	private GameObject player;
 	private int[,] boardState;
 	private int currentMap=0;
-	private int[] resources = new int[2]{960,1290};
+	private int[] resources = new int[2]{1290,960};
 	private int[,,] maps = new int[2,6,6]{
 		{   {10,10,10,10,10,10},
 			{10,20,10,10,10,10},
@@ -411,6 +411,7 @@ public class GameManager : MonoBehaviour {
 		Destroy(player);
 		player = (GameObject)Instantiate((GameObject)Resources.Load("player"));
 		xPlayer =0;
+		((Player)player.GetComponent(typeof(Player))).setResources(resources[currentMap]);
 		yPlayer =0;
 		player.transform.localPosition = new Vector3(xPlayer-board.GetLength(0)/2,board.GetLength(1)/2-yPlayer,0.0f);
 	}

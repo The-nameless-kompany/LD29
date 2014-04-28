@@ -6,10 +6,11 @@ public class Next : MonoBehaviour {
 	GameObject winMenu;
 	void Start()
 	{
-		winMenu = GameObject.Find("Win menu(Clone)");
+
 	}
 
 	void OnMouseDown(){
+		winMenu = GameObject.Find("Win menu(Clone)");
 		GameManager.obtener().nextMap();
 		Destroy(winMenu);
 	}
