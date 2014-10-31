@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 	public int actionsByDigUpOrDown = 3;
 	public int actionsByDinamite = 2;
 
-	private int actionsPerQuake = 30;
+	private int actionsPerQuake = 20;
 	private string pauseKey = "p";
 	private int direction = 1;
 	private int yDir = 0;

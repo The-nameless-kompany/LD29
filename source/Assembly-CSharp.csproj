@@ -50,7 +50,9 @@
      <Compile Include="Assets\Scripts\Dinamite.cs" />
      <Compile Include="Assets\Scripts\Earthquake.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Help.cs" />
      <Compile Include="Assets\Scripts\HelpButton.cs" />
+     <Compile Include="Assets\Scripts\HelpButton2.cs" />
      <Compile Include="Assets\Scripts\Next.cs" />
      <Compile Include="Assets\Scripts\Pause.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />

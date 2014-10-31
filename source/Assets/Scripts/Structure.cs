@@ -24,7 +24,7 @@ public class Structure : MonoBehaviour {
 	 */ 
 	public bool damage(int damage){
 		bool result = false;
-		life -= Random.Range(8*damage,15*damage);
+		life -= Random.Range(12*damage,18*damage);
 		if(life < 1)
 		{
 			result = true;

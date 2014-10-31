@@ -139,7 +139,10 @@ public class GameManager : MonoBehaviour {
 		if(win())
 		{
 			((Player)player.GetComponent(typeof(Player))).pause = true;
-			Instantiate((GameObject)Resources.Load("Win menu"));
+			GameObject tmp = GameObject.Find("Win menu(Clone)");
+			if(tmp == null){
+				Instantiate((GameObject)Resources.Load("Win menu"));
+			}
 		}
 		return result;
 	}
